@@ -649,6 +649,15 @@ zamow: `
             }, 10);
         }
     </script>
+<!-- Ukryte formularze dla Netlify (nie wpływają na wygląd) -->
+<form name="full-form" netlify hidden>
+  <input type="text" name="name">
+  <input type="email" name="email">
+</form>
 
+<form name="simple-form" netlify hidden>
+  <input type="text" name="name">
+  <input type="email" name="email">
+</form>
 </body>
 </html>
