@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tworzę strony internetowe – Kamil</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #111;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        a, .hamburger, .menu a {
+            cursor: pointer;
+        }
+
+        /* TŁO */
+        .background {
+            position: fixed;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1522199710521-72d69614c702?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            z-index: -2;
+        }
+
+        .background::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 35px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 2000;
+        }
+
+        .hamburger div {
+            width: 100%;
+            height: 5px;
+            background: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* MENU */
+        .menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 260px;
+            height: 100vh;
+            background: #222;
+            padding: 40px 20px;
+            transition: 0.4s;
+            z-index: 1500;
+        }
+
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            margin: 18px 0;
+            opacity: 0;
+            transform: translateX(20px);
+            animation: slideIn 0.4s forwards;
+        }
+
+        /* HOME TEKST */
+        .hero-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 800px;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        /* TEKST Z MENU */
+      .content-text {
+    width: 80%;
+    max-width: 700px;
+    margin: 120px auto 120px auto; /* odstęp od góry i CTA na dole */
+    text-align: center;
+    display: none;
+
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.content-text.visible {
+    display: block;
+    opacity: 1;
+}
+        /* PRZYCISKI NA DOLE */
+        .bottom-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 2000;
+        }
+
+        .bottom-btn {
+            padding: 12px 22px;
+            background: #00b894;
+            color: white;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .bottom-btn:hover {
+            background: #019875;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 25px;
+            font-size: 22px;
+        }
+
+        /* ANIMACJE */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+/* Naprawa przewijania w bok */
+body {
+    overflow-x: hidden;
+}
+
+
+/* Naprawa skakania hero-content na telefonach */
+.hero-content {
+    opacity: 0;
+}
+
+.hero-content.ready {
+    opacity: 1;
+}
+
+
+.order-section h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.order-section p {
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+form {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+button.btn-main,
+button.btn-secondary {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-main {
+    background: #00b894;
+    color: white;
+}
+
+.btn-main:hover {
+    background: #019875;
+}
+
+.btn-secondary {
+    background: #444;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #333;
+}
+
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    opacity: 0.7;
+    font-weight: 600;
+}
+/* Ukryj formularz, gdy sekcja zamow nie jest aktywna */
+
+select option {
+    background: #222;
+    color: white;
+}
+select {
+    background: rgba(255,255,255,0.08);
+    color: white;
+}
+/* FORMULARZ – ŁADNA WERSJA */
+.order-section {
+    background: rgba(0,0,0,0.55);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    margin: 40px auto;
+    max-width: 700px;
+    color: white;
+}
+
+.order-section h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.order-section p {
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+form {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 15px;
+}
+
+button.btn-main,
+button.btn-secondary {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-main {
+    background: #00b894;
+    color: white;
+}
+
+.btn-main:hover {
+    background: #019875;
+}
+
+.btn-secondary {
+    background: #444;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #333;
+}
+
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    opacity: 0.7;
+    font-weight: 600;
+}
+
+/* Ukryj formularz, gdy sekcja zamow nie jest aktywna */
+#contentText .order-section {
+    display: none;
+}
+
+#contentText.visible .order-section {
+    display: block;
+}
+
+/* PROSTE WYŚRODKOWANIE SIMPLE-FORM */
+.simple-form {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* MOBILE – ŻEBY NIC NIE UCIEKAŁO */
+@media (max-width: 600px) {
+    .order-section {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
+        margin: 20px auto;
+        box-sizing: border-box;
+    }
+
+    .order-section form {
+        width: 100%;
+        padding: 16px;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .simple-form {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .hero-content {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        padding: 40px 20px;
+        margin-top: 40px;
+        animation: none !important;
+        opacity: 1 !important;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <!-- HAMBURGER -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+    </div>
+
+    <!-- MENU -->
+    <nav class="menu" id="menu">
+        <a onclick="showContent('home')">Home</a>
+        <a onclick="showContent('oferuje')">Co oferuję</a>
+        <a onclick="showContent('warto')">Dlaczego warto</a>
+        <a onclick="showContent('wspolpraca')">Jak wygląda współpraca</a>
+        <a onclick="showContent('cennik')">Cennik</a>
+        <a onclick="showContent('kontakt')">Kontakt</a>
+    </nav>
+
+    <!-- HOME -->
+    <div class="hero-content" id="homeContent">
+        <h1>Strony dla firm.</h1>
+        <p>Od zawsze lubiłem tworzyć rzeczy w internecie — dziś pomagam małym firmom pokazać się światu.</p>
+        <p>Tworzę strony, które nie tylko wyglądają dobrze, ale też pomagają docierać do klientów — dzięki tekstom, pozycjonowaniu i obecności w Google.</p>
+        <p>Nie mam ukrytych kosztów. Płacisz dopiero wtedy, gdy strona naprawdę Ci się spodoba.</p>
+    </div>
+
+    <!-- TEKST Z MENU -->
+    <div class="content-text" id="contentText"></div>
+
+    <!-- PRZYCISKI NA DOLE -->
+    <div class="bottom-bar">
+        <a class="bottom-btn" onclick="showContent('zamow')">Zamów stronę</a>
+        <a class="bottom-btn" href="tel:+48539314805">Zadzwoń +48 539 314 805</a>
+    </div>
+
+    <script>
+        const menu = document.getElementById("menu");
+        const box = document.getElementById("contentText");
+        const home = document.getElementById("homeContent");
+
+window.addEventListener("load", () => {
+    home.classList.add("ready");
+});
+
+        function toggleMenu() {
+            menu.style.right = menu.style.right === "0px" ? "-300px" : "0px";
+        }
+
+        document.addEventListener("click", e => {
+            if (!menu.contains(e.target) && !e.target.closest(".hamburger")) {
+                menu.style.right = "-300px";
+            }
+        });
+
+        const content = {
+    oferuje: `
+        <h3>Nowoczesne strony internetowe</h3>
+        <p>Tworzę szybkie, estetyczne i skuteczne strony, które pomagają małym firmom zdobywać klientów.</p>
+
+        <h3>Widoczność w Google</h3>
+        <p>Konfiguruję Google Business Profile i optymalizuję stronę pod SEO, żeby Twoja firma była łatwiej znajdowana.</p>
+
+        <h3>Pomoc techniczna od A do Z</h3>
+        <p>Doradzam w wyborze hostingu i domeny, konfiguruję wszystko za Ciebie i dbam o to, żeby strona działała bez problemów.</p>
+
+        <h3>Treści, które przekonują</h3>
+        <p>Jeśli nie masz tekstów — napiszę je tak, żeby klient od razu wiedział, dlaczego warto wybrać właśnie Ciebie.</p>
+
+        <h3>Wsparcie po wdrożeniu</h3>
+        <p>Po publikacji strony nie znikam — pomagam w aktualizacjach, zmianach i dalszym rozwoju.</p>
+    `,
+
+    warto: `
+        <h3>Robię to z pasją</h3>
+        <p>Nie jestem agencją — jestem człowiekiem, który robi strony z sercem i dbałością o każdy szczegół.</p>
+
+        <h3>Pracuję, aż efekt będzie idealny</h3>
+        <p>Dopóki strona naprawdę Ci się nie spodoba, nie płacisz ani złotówki.</p>
+
+        <h3>Uczciwe zasady i jasna komunikacja</h3>
+        <p>Bez ukrytych kosztów, bez pośpiechu i bez ściemy — wszystko ustalamy jasno i po ludzku.</p>
+    `,
+
+    wspolpraca: `
+
+
+        <h3>Rozmowa i poznanie Twoich potrzeb</h3>
+        <p>Najpierw ustalamy, czego dokładnie potrzebujesz i co ma robić Twoja strona.</p>
+
+        <h3>Projekt i pierwsza wersja</h3>
+        <p>Przygotowuję projekt i wysyłam Ci do wglądu. Możesz zgłaszać poprawki.</p>
+
+        <h3>Dopracowanie szczegółów</h3>
+        <p>Wprowadzam zmiany, poprawki i dopieszczam każdy element, aż powiesz „tak, to jest to”.</p>
+
+        <h3>Publikacja i wsparcie</h3>
+        <p>Publikuję stronę i pomagam Ci w pierwszych krokach. Nie znikam po oddaniu projektu.</p>
+    `,
+
+    cennik: `
+        <h2>Cennik</h2>
+
+        <h3>Strona wizytówka — od 600 zł</h3>
+        <p>Idealna dla małych firm, usługodawców i osób, które chcą zaistnieć w Google.</p>
+
+        <h3>Strona firmowa — od 1200 zł</h3>
+        <p>Bardziej rozbudowana strona z kilkoma podstronami, ofertą i sekcją kontaktową.</p>
+
+        <h3>Sklep internetowy — od 2000 zł</h3>
+        <p>Sklep z pełną konfiguracją produktów, płatności i integracji.</p>
+
+        <h3>Dodatkowe koszty</h3>
+        <p>Hosting i domena — zwykle 100–300 zł rocznie (zależnie od dostawcy).</p>
+        <p>Pozycjonowanie SEO — wycena indywidualna, zależnie od branży i konkurencji.</p>
+
+        <h3>Uczciwe zasady</h3>
+        <p>Płacisz dopiero wtedy, gdy strona naprawdę Ci się spodoba. Zero ryzyka, zero ukrytych kosztów.</p>
+    `,
+
+    kontakt: `
+        <h2>Kontakt</h2>
+
+        <h3>Oz.</h3>
+
+        <p style="margin-top: 20px; font-size: 18px;">
+            📞 <strong>+48 539 314 805</strong><br>
+            ✉️ <strong>k_k6@o2.pl</strong><br>
+            📍 <strong>Ostrołęka, ul. Żniwna 32A</strong>
+        </p>
+
+        <div style="margin-top: 25px;">
+            <iframe 
+                width="100%" 
+                height="250" 
+                style="border:0; border-radius: 10px;"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Ostrołęka%20Żniwna%2032A&output=embed">
+            </iframe>
+        </div>
+    `,
+zamow: `
+<section class="order-section">
+  <h2>Zamów stronę</h2>
+  <p>Krótka ankieta pomoże mi szybciej przygotować wycenę. Jeśli nie chcesz jej wypełniać, kliknij „Wyślij tylko dane”.</p>
+
+  <form class="full-form" netlify>
+    <input type="hidden" name="form-name" value="full-form">
+    <h3>Krótka ankieta</h3>
+
+    <label>Jaki rodzaj strony potrzebujesz?</label>
+    <select>
+      <option>Wizytówka</option>
+      <option>One‑page</option>
+      <option>Kilka podstron</option>
+      <option>Sklep (mały)</option>
+      <option>Nie wiem, pomóż mi wybrać</option>
+    </select>
+
+    <label>Czy masz logo i materiały?</label>
+    <select>
+      <option>Mam wszystko</option>
+      <option>Mam część</option>
+      <option>Nie mam nic</option>
+      <option>Nie wiem, potrzebuję pomocy</option>
+    </select>
+
+    <label>Czy masz teksty na stronę?</label>
+    <select>
+      <option>Tak</option>
+      <option>Nie</option>
+      <option>Potrzebuję, żebyś je przygotował</option>
+    </select>
+
+    <label>Termin realizacji</label>
+    <select>
+      <option>Jak najszybciej</option>
+      <option>W ciągu miesiąca</option>
+      <option>Nie spieszy mi się</option>
+    </select>
+
+    <label>Krótko opisz swój biznes (opcjonalnie)</label>
+    <textarea name="business" rows="4"></textarea>
+
+    <h3>Dane kontaktowe</h3>
+
+    <label>Imię / nazwa firmy *</label>
+    <input type="text" name="name" required>
+
+    <label>Email *</label>
+    <input type="email" name="email" required>
+
+    <label>Telefon (opcjonalnie)</label>
+    <input type="text" name="phone">
+
+    <button type="submit" class="btn-main">Wyślij ankietę</button>
+  </form>
+
+  <div class="divider">lub</div>
+
+  <form class="simple-form" netlify>
+    <input type="hidden" name="form-name" value="simple-form">
+    <h3>Wyślij tylko swoje dane</h3>
+
+    <label>Imię / nazwa firmy *</label>
+    <input type="text" name="name" required>
+
+    <label>Email *</label>
+    <input type="email" name="email" required>
+
+    <label>Wiadomość (opcjonalnie)</label>
+    <textarea name="message" rows="3"></textarea>
+
+    <button type="submit" class="btn-secondary">Wyślij</button>
+  </form>
+</section>
+`};
+
+        function showContent(key) {
+            menu.style.right = "-300px";
+
+            if (key === "home") {
+                box.classList.remove("visible");
+                box.style.display = "none";
+                home.style.display = "block";
+                return;
+            }
+
+            home.style.display = "none";
+
+            box.classList.remove("visible");
+            box.style.display = "none";
+            void box.offsetWidth;
+
+            box.innerHTML = content[key];
+            box.style.display = "block";
+
+            setTimeout(() => {
+                box.classList.add("visible");
+            }, 10);
+        }
+    </script>
+
+</body>
+</html>
