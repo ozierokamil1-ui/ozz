@@ -553,8 +553,7 @@ zamow: `
   <h2>Zamów stronę</h2>
   <p>Krótka ankieta pomoże mi szybciej przygotować wycenę. Jeśli nie chcesz jej wypełniać, kliknij „Wyślij tylko dane”.</p>
 
-  <form class="full-form" netlify>
-    <input type="hidden" name="form-name" value="full-form">
+  <form class="full-form" action="https://formspree.io/f/xlgwnqay" method="POST">
     <h3>Krótka ankieta</h3>
 
     <label>Jaki rodzaj strony potrzebujesz?</label>
@@ -607,8 +606,8 @@ zamow: `
 
   <div class="divider">lub</div>
 
-  <form class="simple-form" netlify>
-    <input type="hidden" name="form-name" value="simple-form">
+  <form class="simple-form" action="https://formspree.io/f/xlgwnqay" method="POST">
+
     <h3>Wyślij tylko swoje dane</h3>
 
     <label>Imię / nazwa firmy *</label>
@@ -649,15 +648,5 @@ zamow: `
             }, 10);
         }
     </script>
-<!-- Ukryte formularze dla Netlify (nie wpływają na wygląd) -->
-<form name="full-form" netlify hidden>
-  <input type="text" name="name">
-  <input type="email" name="email">
-</form>
-
-<form name="simple-form" netlify hidden>
-  <input type="text" name="name">
-  <input type="email" name="email">
-</form>
 </body>
 </html>
